@@ -7,7 +7,8 @@ import axios from 'axios';
 
 axios.get('https://api.github.com/users/kerrjoshua')
   .then(res => {
-    console.log(res)
+    console.log(res);
+    console.log(cardMaker(res.data))
   })
   .catch(err => {
     console.error(err)
@@ -57,6 +58,52 @@ const followersArray = [];
       </div>
     </div>
 */
+
+function cardMaker(dataObj) {
+  //create the necessary dom elements
+const card = document.createElement('div');
+const image = document.createElement('img');
+const cardInfo = document.createElement('div');
+const name = document.createElement('h3');
+const username = document.createElement('p');
+const location = document.createElement('p');
+const profile = document.createElement('p');
+const profileLink = document.createElement('a');
+const followers = document.createElement('p');
+const following = document.createElement('p');
+const bio = document.createElement('p');
+
+//add necessary classes and attributes
+card.className = 'card';
+image.src = dataObj.avatar_url;
+cardInfo.className = 'card-info';
+name.className = 'name';
+name.textContent = dataObj.name;
+username.className = 'username';
+username.textContent = dataObj.login;
+location.textContent = `Location: ${dataObj.location}`;
+profile.textContent = `Profile: `;
+profileLink.href = dataObj.html_url;
+profileLink.textContent = dataObj.html_url;
+followers.textContent = `Followers: ${dataObj.followers}`;
+following.textContent = `Following: ${dataObj.following}`;
+bio.textContent = `Bio: ${dataObj.bio}`;
+
+// append child elements to parent element
+card.appendChild(image);
+card.appendChild(cardInfo);
+cardInfo.appendChild(name);
+cardInfo.appendChild(username);
+cardInfo.appendChild(location);
+cardInfo.appendChild(profile);
+profile.appendChild(profileLink);
+cardInfo.appendChild(followers);
+cardInfo.appendChild(following);
+
+
+// return parent element
+return card;
+}
 
 /*
   List of LS Instructors Github username's:
